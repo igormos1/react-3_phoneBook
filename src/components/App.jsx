@@ -36,6 +36,22 @@ export default class App extends Component {
     this.setState({ filter: value });
   };
 
+    componentDidMount() {
+    const contacts =JSON.parse(localStorage.getItem('contacts'));
+    if (contacts) {
+      this.setState({contacts: contacts});
+    }
+  }
+
+  componentDidUpdate(prevState) {
+    const nextTools = this.state.contacts;
+    const prevTools = prevState.contacts;
+
+    if(nextTools !== prevTools) {
+      localStorage.setItem('contacts', JSON.stringify(nextTools));
+    }    
+  }
+
   render() {
     const { contacts, filter } = this.state;
     const filteredContacts = filterContacts(contacts, filter);
